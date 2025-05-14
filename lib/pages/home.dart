@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:meals_pro/pages/product.dart';
+
 import 'package:meals_pro/provider/category_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final category = Provider.of<CategoryProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.grey,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text("Meals"),
+      ),
+      backgroundColor: Colors.white,
       body: category.isLoading
           ? Center(child: CircularProgressIndicator())
           : category.error.isNotEmpty
@@ -49,6 +54,13 @@ class _HomeState extends State<Home> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(4, 4),
+                              blurRadius: 8,
+                              color: Colors.black.withOpacity(0.12),
+                            )
+                          ],
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                         ),

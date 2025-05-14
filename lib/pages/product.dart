@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:meals_pro/pages/detail.dart';
+import 'package:meals_pro/pages/search.dart';
 import 'package:meals_pro/provider/product_provider.dart';
 
 import 'package:provider/provider.dart';
@@ -30,6 +31,21 @@ class _ProductState extends State<Product> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Search(),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.search,
+            ),
+          )
+        ],
       ),
       body: product.isLoading
           ? Center(child: CircularProgressIndicator())
