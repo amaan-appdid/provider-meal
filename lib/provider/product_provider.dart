@@ -21,8 +21,10 @@ class ProductProvider extends ChangeNotifier {
 
     try {
       final response = await http.get(Uri.parse("${apiEndpoint}$title"));
-      // log("Response received: ${response.body}");
+
       log("Response received: ${response.statusCode}");
+      
+      log("Data Recieved: ${jsonDecode(response.body)}");
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonData = jsonDecode(response.body)['meals'];

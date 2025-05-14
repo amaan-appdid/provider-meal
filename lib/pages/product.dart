@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:meals_pro/pages/detail.dart';
 import 'package:meals_pro/provider/product_provider.dart';
 
 import 'package:provider/provider.dart';
@@ -14,14 +15,14 @@ class Product extends StatefulWidget {
 }
 
 class _ProductState extends State<Product> {
-  // @override
-  // void initState() {
-  //   Timer.run(() {
-  //     final productApi = Provider.of<ProductProvider>(context, listen: false);
-  //     productApi.getProduct(title: widget.title);
-  //   });
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    Timer.run(() {
+      final productApi = Provider.of<ProductProvider>(context, listen: false);
+      productApi.getProduct(title: widget.title);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,17 @@ class _ProductState extends State<Product> {
                   itemBuilder: (context, index) {
                     return Card(
                       child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Description(
+                                id: product.productList[index].idMeal,
+                                title: product.productList[index].strMeal,
+                              ),
+                            ),
+                          );
+                        },
                         title: Text(product.productList[index].strMeal),
                         leading: CircleAvatar(
                           backgroundImage: NetworkImage(product.productList[index].strMealThumb),
