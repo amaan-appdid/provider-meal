@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:meals_pro/pages/detail.dart';
 import 'package:meals_pro/pages/search.dart';
 import 'package:meals_pro/provider/product_provider.dart';
+import 'package:meals_pro/provider/random_provider.dart';
 
 import 'package:provider/provider.dart';
 
@@ -28,7 +29,22 @@ class _ProductState extends State<Product> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<ProductProvider>(context);
+    final random = Provider.of<RandomProvider>(context);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          random.randomMeal();
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Description(id: product.getRandomProductID()),
+              ));
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Random Meals"),
+        ),
+      ),
       appBar: AppBar(
         title: Text(widget.title),
         actions: [

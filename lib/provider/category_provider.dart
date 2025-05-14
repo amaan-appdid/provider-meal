@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -38,5 +39,10 @@ class CategoryProvider extends ChangeNotifier {
 
       notifyListeners();
     }
+  }
+
+  String? getRandomProductID() {
+    var random = math.Random();
+    return categoryList[random.nextInt(categoryList.length)].idCategory;
   }
 }

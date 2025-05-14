@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +24,7 @@ class ProductProvider extends ChangeNotifier {
       final response = await http.get(Uri.parse("${apiEndpoint}$title"));
 
       log("Response received: ${response.statusCode}");
-      
+
       log("Data Recieved: ${jsonDecode(response.body)}");
 
       if (response.statusCode == 200) {
@@ -42,5 +43,11 @@ class ProductProvider extends ChangeNotifier {
 
       notifyListeners();
     }
+  }
+
+  //
+  String getRandomProductID() {
+    var random = math.Random();
+    return productList[random.nextInt(productList.length)].idMeal;
   }
 }

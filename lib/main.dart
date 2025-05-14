@@ -4,6 +4,7 @@ import 'package:meals_pro/pages/home.dart';
 import 'package:meals_pro/provider/category_provider.dart';
 import 'package:meals_pro/provider/detail_provider.dart';
 import 'package:meals_pro/provider/product_provider.dart';
+import 'package:meals_pro/provider/random_provider.dart';
 import 'package:meals_pro/provider/search_provider.dart';
 
 import 'package:provider/provider.dart';
@@ -23,6 +24,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => SearchProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RandomProvider(),
         )
       ],
       child: MyApp(),

@@ -2,10 +2,13 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:meals_pro/pages/detail.dart';
 import 'package:meals_pro/pages/product.dart';
 
 import 'package:meals_pro/provider/category_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../provider/random_provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -27,11 +30,19 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final category = Provider.of<CategoryProvider>(context);
+    final random = Provider.of<RandomProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("Meals"),
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   child: Text(
+      //     "Random Categories",
+      //   ),
+      // ),
       backgroundColor: Colors.white,
       body: category.isLoading
           ? Center(child: CircularProgressIndicator())

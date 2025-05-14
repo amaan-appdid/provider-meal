@@ -22,9 +22,12 @@ class SearchProvider extends ChangeNotifier {
       final response = await http.get(Uri.parse("${apiEndpoint}$query"));
       log("Data Recieved: ${response.body}");
       log("Response Recieved: ${response.statusCode}");
+
       if (response.statusCode == 200) {
         final List<dynamic> jsonData = jsonDecode(response.body)['meals'];
+
         searchList = jsonData.map((e) => Meal.fromJson(e)).toList();
+
         error = "";
       } else {
         error = "Failed To Laod Data: ${response.statusCode}";

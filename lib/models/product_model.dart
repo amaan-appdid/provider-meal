@@ -9,25 +9,25 @@ ProductModel productModelFromJson(String str) => ProductModel.fromJson(json.deco
 String productModelToJson(ProductModel data) => json.encode(data.toJson());
 
 class ProductModel {
-  String strMeal;
-  String strMealThumb;
-  String idMeal;
+    String strMeal;
+    String strMealThumb;
+    String idMeal;
 
-  ProductModel({
-    required this.strMeal,
-    required this.strMealThumb,
-    required this.idMeal,
-  });
+    ProductModel({
+        required this.strMeal,
+        required this.strMealThumb,
+        required this.idMeal,
+    });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
+    factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         strMeal: json["strMeal"],
         strMealThumb: json["strMealThumb"],
         idMeal: json["idMeal"],
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "strMeal": strMeal,
         "strMealThumb": strMealThumb,
         "idMeal": idMeal,
-      };
+    };
 }
