@@ -2,12 +2,14 @@ class DetailModel {
   final String strMeal;
   final String strMealThumb;
   final String strInstructions;
+  final String strYoutube;
   final List<Map<String, String>> ingredients;
 
   DetailModel({
     required this.strMeal,
     required this.strMealThumb,
     required this.strInstructions,
+    required this.strYoutube,
     required this.ingredients,
   });
 
@@ -19,7 +21,7 @@ class DetailModel {
       final measure = json['strMeasure$i'];
 
       if (ingredient != null && ingredient.toString().trim().isNotEmpty && measure != null && measure.toString().trim().isNotEmpty) {
-        ingredientsList.add({ingredient: measure});
+        ingredientsList.add({ingredient.toString(): measure.toString()});
       }
     }
 
@@ -27,29 +29,8 @@ class DetailModel {
       strMeal: json['strMeal'] ?? '',
       strMealThumb: json['strMealThumb'] ?? '',
       strInstructions: json['strInstructions'] ?? '',
+      strYoutube: json['strYoutube'] ?? '',
       ingredients: ingredientsList,
     );
   }
 }
-
-
-
-
-                              // ...item.ingredients.map(
-                              //   (entry) {
-                              //     final ingredient = entry.keys.first;
-                              //     final measure = entry.values.first;
-                              //     return TableRow(
-                              //       children: [
-                              //         Padding(
-                              //           padding: const EdgeInsets.all(8.0),
-                              //           child: Text(ingredient),
-                              //         ),
-                              //         Padding(
-                              //           padding: const EdgeInsets.all(8.0),
-                              //           child: Text(measure),
-                              //         ),
-                              //       ],
-                              //     );
-                              //   },
-                              // ).toList(),

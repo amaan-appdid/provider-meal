@@ -1,15 +1,16 @@
 import 'dart:async';
-
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:meals_pro/pages/full_screen.dart';
 import 'package:meals_pro/provider/detail_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-// ignore: must_be_immutable
 class Description extends StatefulWidget {
   Description({super.key, required this.id, this.title});
   final String id;
-  String? title;
+  final String? title;
 
   @override
   State<Description> createState() => _DescriptionState();
@@ -18,11 +19,11 @@ class Description extends StatefulWidget {
 class _DescriptionState extends State<Description> {
   @override
   void initState() {
+    super.initState();
     Timer.run(() {
       final detailApi = Provider.of<DetailProvider>(context, listen: false);
       detailApi.getDetails(id: widget.id);
     });
-    super.initState();
   }
 
   @override
@@ -33,18 +34,34 @@ class _DescriptionState extends State<Description> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: Text(
-          widget.title ?? "Description Page",
-        ),
+        title: Text(widget.title ?? "Description Page"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () async {
+              if (detail.detailList.isNotEmpty) {
+                final item = detail.detailList.first;
+                final shareText = '''
+                Check out this meal!
+
+                ${item.strMeal}
+                ${item.strInstructions}
+                ${item.strMealThumb}
+                ''';
+                Share.share(shareText);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('No meal details to share.')),
+                );
+              }
+            },
+          ),
+        ],
       ),
       body: detail.isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const Center(child: CircularProgressIndicator())
           : detail.error.isNotEmpty
-              ? Center(
-                  child: Text(detail.error),
-                )
+              ? Center(child: Text(detail.error))
               : ListView.builder(
                   itemCount: detail.detailList.length,
                   itemBuilder: (context, index) {
@@ -71,7 +88,10 @@ class _DescriptionState extends State<Description> {
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
                             item.strMeal,
-                            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -87,16 +107,17 @@ class _DescriptionState extends State<Description> {
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
                             "Ingredients",
-                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Table(
                             border: TableBorder.all(color: Colors.grey),
-                            columnWidths: {
-                              // 0: FlexColumnWidth(2),
-                              // 1: FlexColumnWidth(1),
+                            columnWidths: const {
                               0: FlexColumnWidth(1.5),
                               1: FlexColumnWidth(1),
                             },
@@ -114,27 +135,54 @@ class _DescriptionState extends State<Description> {
                                   ),
                                 ],
                               ),
-                              ...item.ingredients.map(
-                                (entry) {
-                                  final ingredient = entry.keys.first;
-                                  final measure = entry.values.first;
-                                  return TableRow(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(ingredient),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(measure),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ).toList(),
+                              ...item.ingredients.map((entry) {
+                                final ingredients = entry.keys.first;
+                                final measures = entry.values.first;
+                                return TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(ingredients),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(measures),
+                                    ),
+                                  ],
+                                );
+                              })
                             ],
                           ),
                         ),
+                        if (item.strYoutube.trim().isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton.icon(
+                                icon: const Icon(Icons.video_library),
+                                label: const Text("Watch on YouTube"),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                ),
+                                onPressed: () async {
+                                  final urlString = item.strYoutube.trim();
+                                  final Uri url = Uri.parse(urlString);
+                                  log(urlString, name: "urlString");
+                                  try {
+                                    log("${await canLaunchUrl(url)}");
+
+                                    await launchUrl(url, mode: LaunchMode.externalNonBrowserApplication);
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('Failed to open YouTube link: $e')),
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
                       ],
                     );
                   },

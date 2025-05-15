@@ -8,7 +8,7 @@ class RandomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mealProvider = Provider.of<RandomProvider>(context);
-    
+
 
     return Scaffold(
       appBar: AppBar(title: Text('Random Meal Generator')),

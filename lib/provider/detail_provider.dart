@@ -40,4 +40,3 @@ class DetailProvider extends ChangeNotifier {
   }
 }
   // Padding(
-                      
