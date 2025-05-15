@@ -30,7 +30,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final category = Provider.of<CategoryProvider>(context);
-    // final random = Provider.of<RandomProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -38,12 +37,6 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         title: Text("Meals"),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   child: Text(
-      //     "Random Categories",
-      //   ),
-      // ),
       backgroundColor: Colors.white,
       body: category.isLoading
           ? Center(child: CircularProgressIndicator())
@@ -59,10 +52,11 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         log(category.categoryList[index].strCategory.toString());
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Product(title: category.categoryList[index].strCategory!),
-                            ));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Product(title: category.categoryList[index].strCategory!),
+                          ),
+                        );
                       },
                       child: Container(
                         decoration: BoxDecoration(

@@ -33,20 +33,6 @@ class _ProductState extends State<Product> {
     // final random = Provider.of<RandomProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     random.randomMeal();
-      //     Navigator.push(
-      //         context,
-      //         MaterialPageRoute(
-      //           builder: (context) => Description(id: product.getRandomProductID()),
-      //         ));
-      //   },
-      //   child: Container(
-      //     width: 200,
-      //     child: Text("Random "),
-      //   ),
-      // ),
       appBar: AppBar(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,

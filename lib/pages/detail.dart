@@ -81,7 +81,9 @@ class _DescriptionState extends State<Description> {
                               ),
                             );
                           },
-                          child: Image.network(item.strMealThumb),
+                          child: Image.network(
+                            item.strMealThumb,
+                          ),
                         ),
                         const SizedBox(height: 10),
                         Padding(
@@ -160,8 +162,8 @@ class _DescriptionState extends State<Description> {
                             child: SizedBox(
                               width: double.infinity,
                               child: ElevatedButton.icon(
-                                icon: const Icon(Icons.video_library),
-                                label: const Text("Watch on YouTube"),
+                                label: Text("Watch On Youtube"),
+                                icon: Icon(Icons.video_library_outlined),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.red,
                                   foregroundColor: Colors.white,
@@ -169,14 +171,13 @@ class _DescriptionState extends State<Description> {
                                 onPressed: () async {
                                   final urlString = item.strYoutube.trim();
                                   final Uri url = Uri.parse(urlString);
-                                  log(urlString, name: "urlString");
                                   try {
-                                    log("${await canLaunchUrl(url)}");
-
-                                    await launchUrl(url, mode: LaunchMode.externalNonBrowserApplication);
+                                    await launchUrl(url, mode: LaunchMode.externalApplication);
                                   } catch (e) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('Failed to open YouTube link: $e')),
+                                      SnackBar(
+                                        content: Text("Failed to open Youtube Link: $e"),
+                                      ),
                                     );
                                   }
                                 },
