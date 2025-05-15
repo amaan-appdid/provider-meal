@@ -2,13 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-void main() {
-  runApp(MaterialApp(
-    home: MealTableView(),
-    debugShowCheckedModeBanner: false,
-  ));
-}
-
 class MealTableView extends StatefulWidget {
   @override
   _MealTableViewState createState() => _MealTableViewState();
@@ -83,7 +76,7 @@ class _MealTableViewState extends State<MealTableView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Random Meal')),
+      // appBar: AppBar(title: Text('Random Meal')),
       body: meal == null
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(

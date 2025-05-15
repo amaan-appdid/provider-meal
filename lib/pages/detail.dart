@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:meals_pro/pages/full_screen.dart';
 import 'package:meals_pro/provider/detail_provider.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class Description extends StatefulWidget {
   Description({super.key, required this.id, this.title});
   final String id;
@@ -27,7 +29,10 @@ class _DescriptionState extends State<Description> {
   Widget build(BuildContext context) {
     final detail = Provider.of<DetailProvider>(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         title: Text(
           widget.title ?? "Description Page",
         ),
@@ -44,17 +49,53 @@ class _DescriptionState extends State<Description> {
                   itemCount: detail.detailList.length,
                   itemBuilder: (context, index) {
                     return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.network(
-                          detail.detailList[index].strMealThumb,
-                        ),
-                        Text(
-                          detail.detailList[index].strMeal,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FullScreen(
+                                  imgUrl: detail.detailList[index].strMealThumb,
+                                  text: detail.detailList[index].strMeal,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Image.network(
+                            detail.detailList[index].strMealThumb,
                           ),
-                        )
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: 10,
+                            right: 10,
+                          ),
+                          child: Text(
+                            detail.detailList[index].strMeal,
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: 10,
+                            right: 10,
+                          ),
+                          child: Text(
+                            detail.detailList[index].strInstructions,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
                       ],
                     );
                   },

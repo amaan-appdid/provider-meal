@@ -86,24 +86,18 @@ class _HomeState extends State<Home> {
                             SizedBox(
                               height: 10,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                category.categoryList[index].strCategory.toString(),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
+                            Text(
+                              category.categoryList[index].strCategory.toString(),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                category.categoryList[index].strCategoryDescription.toString(),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                            Text(
+                              category.categoryList[index].strCategoryDescription.toString(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             )
                           ],
                         ),
