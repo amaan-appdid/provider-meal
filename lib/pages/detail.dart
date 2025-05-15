@@ -38,7 +38,7 @@ class _DescriptionState extends State<Description> {
         ),
       ),
       body: detail.isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : detail.error.isNotEmpty
@@ -48,6 +48,7 @@ class _DescriptionState extends State<Description> {
               : ListView.builder(
                   itemCount: detail.detailList.length,
                   itemBuilder: (context, index) {
+                    final item = detail.detailList[index];
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -57,43 +58,81 @@ class _DescriptionState extends State<Description> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FullScreen(
-                                  imgUrl: detail.detailList[index].strMealThumb,
-                                  text: detail.detailList[index].strMeal,
+                                  imgUrl: item.strMealThumb,
+                                  text: item.strMeal,
                                 ),
                               ),
                             );
                           },
-                          child: Image.network(
-                            detail.detailList[index].strMealThumb,
-                          ),
+                          child: Image.network(item.strMealThumb),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 10,
-                            right: 10,
-                          ),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
-                            detail.detailList[index].strMeal,
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            item.strMeal,
+                            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 10,
-                            right: 10,
-                          ),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
-                            detail.detailList[index].strInstructions,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                            ),
+                            item.strInstructions,
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            "Ingredients",
+                            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Table(
+                            border: TableBorder.all(color: Colors.grey),
+                            columnWidths: {
+                              // 0: FlexColumnWidth(2),
+                              // 1: FlexColumnWidth(1),
+                              0: FlexColumnWidth(1.5),
+                              1: FlexColumnWidth(1),
+                            },
+                            children: [
+                              TableRow(
+                                decoration: BoxDecoration(color: Colors.grey.shade300),
+                                children: const [
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text("Ingredient", style: TextStyle(fontWeight: FontWeight.bold)),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text("Measure", style: TextStyle(fontWeight: FontWeight.bold)),
+                                  ),
+                                ],
+                              ),
+                              ...item.ingredients.map(
+                                (entry) {
+                                  final ingredient = entry.keys.first;
+                                  final measure = entry.values.first;
+                                  return TableRow(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(ingredient),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(measure),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ).toList(),
+                            ],
                           ),
                         ),
                       ],

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:meals_pro/pages/detail.dart';
 import 'package:meals_pro/pages/search.dart';
 import 'package:meals_pro/provider/product_provider.dart';
-import 'package:meals_pro/provider/random_provider.dart';
+// import 'package:meals_pro/provider/random_provider.dart';
 
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -30,7 +30,7 @@ class _ProductState extends State<Product> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<ProductProvider>(context);
-    final random = Provider.of<RandomProvider>(context);
+    // final random = Provider.of<RandomProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       // floatingActionButton: FloatingActionButton(
@@ -106,13 +106,14 @@ class _ProductState extends State<Product> {
                           BoxShadow(
                             offset: Offset(4, 4),
                             blurRadius: 8,
-                            color: Colors.black.withOpacity(0.12),
+                            color: Colors.black.withOpacity(0.03),
                           )
                         ],
                       ),
                       child: Card(
+                        surfaceTintColor: Colors.white,
                         color: Colors.white,
-                        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                         child: ListTile(
                           onTap: () {
                             Navigator.push(
